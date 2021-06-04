@@ -4506,7 +4506,14 @@ anchor LowerReach.WindChannel at -256, -4035:  # The furnace left of the wind ch
 
   state LowerReach.CentralFurnace:
     moki: Grenade=1
-
+    
+  state LowerReach.WindLantern:
+    moki: Grenade=1
+    gorlek, glitch: Sentry=1, DoubleJump OR Bash OR Hammer OR Launch # may require a little luck to get the sentry close enough
+    unsafe: 
+      Flap, Bash, Dash # Juggle the soup projectile
+      # Sentry=1 only must be done before breaking the wall
+   
   pickup LowerReach.BelowLupoEX:
     moki:
       DoubleJump, Bash, Grenade=1
@@ -4522,22 +4529,15 @@ anchor LowerReach.WindChannel at -256, -4035:  # The furnace left of the wind ch
       Combat=ShieldMiner OR Bash OR Launch
       DoubleJump, Dash OR Glide
   pickup LowerReach.WindBottomEX:
-    moki: Grenade=1, Glide  # grenade to light the lantern
-    gorlek:
-      Grenade=1, Damage=20 OR Glide  # Pickup too close from the spikes for a TP out
-      glitch:  # Sentry to light the lantern
-        Sentry=1, Glide, Launch OR SentryJump=1
-        Sentry=1, Damage=20, Launch OR SentryJump=1
-        Sentry=1, Glide, DoubleJump, TripleJump OR Hammer  # jump bellow the lantern, don't need any wall jump
-        Sentry=1, Damage=20, DoubleJump, TripleJump OR Hammer  # jump bellow the lantern, don't need any wall jump
-    unsafe:
-      Sentry=1, DoubleJump  # djump + sentry to light the lantern. The sentry need to explode when the butterfly is high (rng based?)
+    moki, LowerReach.WindLantern: Glide
+    gorlek, LowerReach.WindLantern:
+      Damage=20, Launch OR SentryJump=1
+      Damage=20, DoubleJump, TripleJump OR Hammer  # jump bellow the lantern, don't need any wall jump
+    unsafe, LowerReach.WindLantern:
+      Damage=20 # Pickup very close to the spikes for a TP out without damage, but possible
   pickup LowerReach.WindHiddenEX:
-    moki: Grenade=1, Glide  # grenade to light the lantern
+    moki, LowerReach.WindLantern: Glide
     gorlek:
-      glitch:  # sentry to light the lantern
-        DoubleJump, Sentry=1, Glide, TripleJump OR Hammer
-        SentryJump=1, Sentry=1, Glide
       SentryJump=2, Damage=20, DoubleJump OR Dash  # sjump, damage boost (the spikes wond t hit Ori after landing on them), sjump again then upsalsh to reach the right wall then sword combo to reach the pickup and tp out
       DoubleJump, TripleJump, SentryJump=1, Damage=20  # same as above, triple jump + up slash to get to the right wall then jump into the spikes to avoid the first sjump
       Launch, DoubleJump OR Dash OR Sword
@@ -4549,14 +4549,11 @@ anchor LowerReach.WindChannel at -256, -4035:  # The furnace left of the wind ch
       Combat=ShieldMiner, DoubleJump OR Dash OR Glide
       Bash, Grenade=1
       Launch
-    # gorlek: ShieldEnemyObstacle  @Validator: ShieldEnemyObstacle obsolete, should be Combat probably
+    gorlek: Bash OR Combat=ShieldMiner
   conn LowerReach.SoupMoki:
-    moki: Grenade=1, Glide  # grenade to light the lantern
+    moki, LowerReach.WindLantern: Glide  # grenade to light the lantern
     gorlek:
       Launch, DoubleJump OR Dash OR Sword OR Hammer OR Damage=20
-      glitch:  # Sentry to light the lantern
-        DoubleJump, Sentry=1, Glide, TripleJump OR Hammer
-        SentryJump=1, Sentry=1, Glide
     unsafe: Launch  # Might be gorlek
 
 # checkpoint at -223, -4043
